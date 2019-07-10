@@ -54,6 +54,8 @@ WantedBy=multi-user.target
 #start and enable at boot
 systemctl start tomcat.service
 
+#Roles related : https://stackoverflow.com/questions/38469496/cant-access-tomcat-8-manager-app
+
 
 
 
