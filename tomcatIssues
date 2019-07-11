@@ -1,0 +1,26 @@
+#if problems while deploying code to tomcat which is from remote build tool use below link :
+#https://stackoverflow.com/questions/41675813/the-username-you-provided-is-not-allowed-to-use-the-text-based-tomcat-manager-e
+#mainly you need to edit : 
+#file /webapps/manager/META-INF/context.xml:
+#from :
+<Context antiResourceLocking="false" privileged="true">
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+</Context>
+
+to 
+<Context antiResourceLocking="false" privileged="true">
+ <!--
+ <Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+ -->
+</Context>
+
+#Also update file tomcat-users.xml as :
+ <role rolename="admin-gui"/>
+  <role rolename="admin-script"/>
+  <role rolename="manager-gui"/>
+  <role rolename="manager-status"/>
+  <role rolename="manager-script"/>
+  <role rolename="manager-jmx"/>
+  <user name="admin" password="admin" roles="manager-gui,manager-status,manager-script,manager-jmx"/>
+  <user name="deployer" password="deployer" roles="manager-script"/>
+  <user name="tomcat" password="tomcat" roles="manager-gui"/>
